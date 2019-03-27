@@ -7,27 +7,27 @@ import Vista.Tabla;
 
 public class Modelo {
 	private Login vistaLogin;
-	private Tabla miVista;	
+	private Tabla miVista;
 	private DefaultTableModel miTabla;
 	private String user;
 	private String pass;
 	private boolean acceso;
-	
-	public Modelo () {
+
+	public Modelo() {
 		miTabla = new DefaultTableModel(
 				new String[][] { { "Javier Fernández", "123456789" }, { "Santiago López", "987654321" }, },
 				new String[] { "Nombre", "Teléfono" });
 	}
-	
+
 	public void setVista(Tabla miVista) {
-		this.miVista=miVista;
+		this.miVista = miVista;
 	}
-	
+
 	public void setVistaLogin(Login vistaLogin) {
 		this.vistaLogin = vistaLogin;
 	}
-	
-	public DefaultTableModel getTabla () {
+
+	public DefaultTableModel getTabla() {
 		return miTabla;
 	}
 
@@ -39,28 +39,50 @@ public class Modelo {
 		return pass;
 	}
 
-	
-	public void setDatosLogin(String usuario , String pass ) {
+	public void setPass(String pass) {
+		this.pass = pass;
+	}
+
+
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	public void setDatosLogin(String usuario, String pass) {
 		this.user = usuario;
 		this.pass = pass;
 		accesoLogin();
 		vistaLogin.loginActualizado();
-		
+
 	}
-	
+
 	public void accesoLogin() {
-		if (user.equalsIgnoreCase("Vitter") && pass.equalsIgnoreCase("12345")) {
+
+		
+		if (getUser().equalsIgnoreCase("Vitter") && getContrase�a().equals("12345")) {
 			acceso = true;
 		} else {
 			acceso = false;
+			setPass(" ");
+			setUser(" ");
+
 		}
+
 	}
-	
+
 	public boolean getacceso() {
 		return acceso;
-		
+
 	}
-	
-	
-	
+
+	public void Login() {
+		if (getacceso()) {
+			vistaLogin.setVisible(false);
+			miVista.setVisible(true);
+		} else {
+			vistaLogin.setVisible(false);
+		}
+	}
+
 }

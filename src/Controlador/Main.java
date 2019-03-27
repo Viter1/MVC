@@ -25,5 +25,5 @@ public class Main {
 		
 		//Primera vista visible
 		miLogin.setVisible(true);
-	}
+}
 }

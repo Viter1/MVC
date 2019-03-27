@@ -15,7 +15,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Login  extends JFrame{
+public class Login extends JFrame {
 	private Controlador miControlador;
 	private Modelo miModelo;
 	private JPanel contentPane;
@@ -40,57 +40,58 @@ public class Login  extends JFrame{
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JLabel lblUser = new JLabel("User");
 		lblUser.setBounds(75, 31, 46, 14);
 		contentPane.add(lblUser);
-		
+
 		JLabel lblPassword = new JLabel("PassWord");
 		lblPassword.setBounds(75, 85, 79, 14);
 		contentPane.add(lblPassword);
-		
+
 		txtUser = new JTextField();
 		txtUser.setBounds(68, 54, 86, 20);
 		contentPane.add(txtUser);
 		txtUser.setColumns(10);
-		
+
 		txtPass = new JTextField();
 		txtPass.setBounds(68, 110, 86, 20);
 		contentPane.add(txtPass);
 		txtPass.setColumns(10);
-		
+
 		JButton btnBotonLogin = new JButton("Login");
-		btnBotonLogin.addActionListener(new Escuchador());
-	
+		btnBotonLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				miControlador.logeoCorrecto();
+				miControlador.CambioDeInterfaz1();
+
+			}
+		});
+
 		btnBotonLogin.setBounds(68, 152, 89, 23);
-		contentPane.add(btnBotonLogin);		
+		contentPane.add(btnBotonLogin);
 		lblAcceso = new JLabel(".....");
 		lblAcceso.setBounds(88, 186, 46, 14);
 		contentPane.add(lblAcceso);
 	}
-	
+
 	public void loginActualizado() {
-		String acces = "" ;
-		if (miModelo.getacceso()==true) {
+		String acces = "";
+		if (miModelo.getacceso()) {
 			acces = "Accept";
 		} else {
 			acces = "Denied";
+			
 		}
 		lblAcceso.setText(acces);
 	}
-	
-	private class Escuchador implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-			miControlador.logeoCorrecto();
-	}
-	}
-	
+
 	public void setModelo(Modelo miModelo) {
-		this.miModelo=miModelo;
+		this.miModelo = miModelo;
 	}
 
 	public void setControlador(Controlador miControlador) {
-		this.miControlador=miControlador;
+		this.miControlador = miControlador;
 	}
 
 	public String getTxtUser() {
@@ -102,7 +103,7 @@ public class Login  extends JFrame{
 	}
 
 	public String getTxtPass() {
-		
+
 		return txtPass.getText();
 	}
 

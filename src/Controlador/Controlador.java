@@ -22,10 +22,16 @@ public class Controlador {
 	}
 
 	public void logeoCorrecto() {
-		String user = log.getTxtPass();
-		String pass = log.getTxtUser();
+		String user = log.getTxtUser();
+		String pass = log.getTxtPass();
 		miModelo.setDatosLogin(user, pass);
 		
 	}
+	public void CambioDeInterfaz1(){
+		miModelo.Login();
+		
+	}
+	
+	
 
 }
