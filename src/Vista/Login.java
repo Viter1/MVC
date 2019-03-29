@@ -12,8 +12,13 @@ import Controlador.Controlador;
 import Modelo.Modelo;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Login extends JFrame {
 	private Controlador miControlador;
@@ -23,6 +28,8 @@ public class Login extends JFrame {
 	private JTextField txtUser;
 	private JTextField txtPass;
 	private JLabel lblAcceso;
+	private JButton btnBotonLogin;
+	private JFileChooser teElijo;
 
 	/**
 	 * Launch the application.
@@ -44,22 +51,38 @@ public class Login extends JFrame {
 		JLabel lblUser = new JLabel("User");
 		lblUser.setBounds(75, 31, 46, 14);
 		contentPane.add(lblUser);
+		
 
 		JLabel lblPassword = new JLabel("PassWord");
 		lblPassword.setBounds(75, 85, 79, 14);
 		contentPane.add(lblPassword);
 
 		txtUser = new JTextField();
+		txtUser.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				enableBotones();
+			}
+		});
+	
 		txtUser.setBounds(68, 54, 86, 20);
 		contentPane.add(txtUser);
 		txtUser.setColumns(10);
 
 		txtPass = new JTextField();
+		txtPass.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				enableBotones();
+			}
+		});
+	
 		txtPass.setBounds(68, 110, 86, 20);
 		contentPane.add(txtPass);
 		txtPass.setColumns(10);
 
-		JButton btnBotonLogin = new JButton("Login");
+		btnBotonLogin = new JButton("Login");
+		btnBotonLogin.setEnabled(false);
 		btnBotonLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				miControlador.logeoCorrecto();
@@ -71,19 +94,33 @@ public class Login extends JFrame {
 		btnBotonLogin.setBounds(68, 152, 89, 23);
 		contentPane.add(btnBotonLogin);
 		lblAcceso = new JLabel(".....");
-		lblAcceso.setBounds(88, 186, 46, 14);
+		lblAcceso.setForeground(Color.RED);
+		lblAcceso.setBounds(68, 186, 344, 45);
 		contentPane.add(lblAcceso);
 	}
 
 	public void loginActualizado() {
 		String acces = "";
-		if (miModelo.getacceso()) {
+		int intentos = miModelo.getReultadoLogin();
+		if (intentos == 0) {
 			acces = "Accept";
+			miModelo.getacceso();
+		} else if (intentos < 3) {
+			acces = "Datos incorrectos te quedan " + (3 - miModelo.getReultadoLogin()) + " intentos";
+
 		} else {
-			acces = "Denied";
-			
+			System.exit(0);
 		}
 		lblAcceso.setText(acces);
+	}
+
+	private void enableBotones() {
+		if (!txtUser.getText().equals("") && !txtPass.getText().equals("")) {
+			btnBotonLogin.setEnabled(true);
+		} else {
+			btnBotonLogin.setEnabled(false);
+		}
+
 	}
 
 	public void setModelo(Modelo miModelo) {
@@ -103,7 +140,6 @@ public class Login extends JFrame {
 	}
 
 	public String getTxtPass() {
-
 		return txtPass.getText();
 	}
 

@@ -9,6 +9,14 @@ public class Modelo {
 	private Login vistaLogin;
 	private Tabla miVista;
 	private DefaultTableModel miTabla;
+	private int intentosLogin;
+	/**
+	 * 0---> Login orrecto 
+	 * 1---> Login incorrecto < 3 
+	 * 2---> Login incorrecto ,
+	 * incorrecto >= 3
+	 */
+	private int resultadoLogin;
 	private String user;
 	private String pass;
 	private boolean acceso;
@@ -43,8 +51,6 @@ public class Modelo {
 		this.pass = pass;
 	}
 
-
-
 	public void setUser(String user) {
 		this.user = user;
 	}
@@ -59,14 +65,14 @@ public class Modelo {
 
 	public void accesoLogin() {
 
-		
 		if (getUser().equalsIgnoreCase("Vitter") && getContraseña().equals("12345")) {
+			this.intentosLogin = 0;
 			acceso = true;
 		} else {
 			acceso = false;
+			intentosLogin++;
 			setPass(" ");
 			setUser(" ");
-
 		}
 
 	}
@@ -80,9 +86,11 @@ public class Modelo {
 		if (getacceso()) {
 			vistaLogin.setVisible(false);
 			miVista.setVisible(true);
-		} else {
-			vistaLogin.setVisible(false);
-		}
+		} 
+	}
+
+	public int getReultadoLogin() {
+		return intentosLogin;
 	}
 
 }

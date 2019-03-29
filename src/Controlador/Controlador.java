@@ -20,6 +20,8 @@ public class Controlador {
 	public void setVistaLogin(Login vistaLogin) {
 		this.log = vistaLogin;
 	}
+	
+	
 
 	public void logeoCorrecto() {
 		String user = log.getTxtUser();
